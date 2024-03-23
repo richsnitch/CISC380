@@ -1,0 +1,46 @@
+def consecutives_as(x):
+    if len(x) == 1:
+        if x == 'a':
+            return 1
+        else:
+            return 0
+    if len(x) == 0:
+        return 0
+    
+   
+    half = len(x)//2
+    left_half = x[:half]
+    right_half = x[half:]    
+   
+    left = consecutives_as(left_half)
+    right = consecutives_as(right_half)
+   
+    total = 0
+
+    if (left_half[len(left_half) - 1] != 'a' or right_half[0] != 'a'):
+        return max(left, right, total)
+    
+    else:
+        l_count = 1
+        r_count = 1
+        for i in range(len(left_half) - 2, -1, -1):
+            if left_half[i] == 'a':
+                l_count += 1
+            else:
+                break
+            
+        for i in range(1, len(right_half)):
+            if right_half[i] == 'a':
+                r_count += 1
+            else:
+                break
+        combine = l_count + r_count
+        return max(combine, left, right)
+        
+                
+est="aabctqaaapwaaaabbbrpq"
+test3 = 'aaasda'
+test2 = 'asdfaaaaaaaaacqb'
+test= "aasdsdas"
+test4 = 'sdaaaasfjkaaaasaaaaa'
+print(consecutives_as(test4))
