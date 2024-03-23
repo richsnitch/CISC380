@@ -1,0 +1,46 @@
+import matplotlib.pyplot as plt
+import random
+
+
+def generate_hill(width):
+    peak_spot = random.randint(0,width-1)
+    steps = [random.randint(1,5) for i in range(peak_spot)]+[-1*random.randint(1,5) for j in range(peak_spot,width)]
+    altitude = [4000]*width
+    for i in range(1, len(altitude)):
+        altitude[i] = steps[i]+altitude[i-1]
+    return altitude
+
+
+def plot_hill(hill_array, peak_index):
+    plt.plot(range(len(hill_array)), hill_array, 'b-')
+    plt.annotate('Max: '+str(hill_array[peak_index]), (peak_index, hill_array[peak_index]))
+    plt.show()
+
+
+def find_peak(hill):
+    # TODO: write this function. 
+    # placeholder code: just returns middle index
+    return len(hill)//2
+
+def find_hill(L):
+    return find_hill_helper(L, 0, len(L))
+
+
+def find_hill_helper(L, lo, hi):
+    # start at lo, up to but not including hi
+    mid = lo + (hi-lo)//2
+    if (L[mid] > L[mid + 1] and L[mid] > L[mid -1]):
+        print(L[mid])
+        return mid
+    if(L[mid] > L[mid - 1]):
+        return find_hill_helper(L, mid + 1, hi)
+    else:
+        return find_hill_helper(L, lo, mid)
+ 
+heights = generate_hill(200)
+p = find_hill(heights)
+
+plot_hill(heights, p)
+print(find_hill(heights))
+
+
