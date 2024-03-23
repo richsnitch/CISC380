@@ -1,0 +1,52 @@
+def find_dominant(x):
+    # base case: if the list has only one item, it's the dominant one
+    if len(x) == 1:
+        return x[0]
+    if len(x) == 0:
+        return None
+   
+    # divide the list into two halves
+    mid = len(x) // 2
+   
+    # Grabbing left half
+    left_half = x[:mid]
+    #Grabbing right half
+    right_half = x[mid:]
+
+    # using recursion to find the dominant one in each half
+    left = find_dominant(left_half)    
+    right = find_dominant(right_half)
+   
+    l_count=0
+    r_count=0
+   
+    # otherwise, count the occurrences of the left and right dominant items in the list
+    for i in x:
+        if(i==left):
+            l_count = l_count+1
+        elif (i==right):
+            r_count = r_count+1
+           
+   
+    # finally checking to see if the l_count or r_count is more than or equal to half the size of the entire list
+    #if it's left return left else right else none
+    if l_count > len(x) // 2:
+        return left
+   
+    elif r_count > len(x) // 2:
+        return right
+    else:
+        return None
+
+f = open('survey.txt')
+s = f.readlines()
+
+new_list = [0] * len(s)
+counter = 0
+
+for i in s:
+    x = i.split(",")
+    new_list[counter] = x[2]+x[3]+x[5]
+    counter+=1
+
+print(find_dominant(new_list))
